@@ -46,25 +46,25 @@ with tab_overview:
     st.subheader("Data Preview")
     st.dataframe(df.head(50), use_container_width=True)
 
-    rows, cols = inspect.get_shape(df)
+    rows, cols = get_shape(df)
     c1, c2, c3 = st.columns(3)
     c1.metric("Rows", rows)
     c2.metric("Columns", cols)
-    c3.metric("Duplicate rows", int(inspect.get_duplicates(df)))
+    c3.metric("Duplicate rows", int(get_duplicates(df)))
 
 # ---------------- Inspect ----------------
 with tab_inspect:
     st.subheader("Column Types")
-    st.dataframe(inspect.get_dtypes(df), use_container_width=True)
+    st.dataframe(get_dtypes(df), use_container_width=True)
 
     st.subheader("Missing Values")
-    st.dataframe(inspect.get_missing(df), use_container_width=True)
+    st.dataframe(get_missing(df), use_container_width=True)
 
     st.subheader("Unique Value Counts")
-    st.dataframe(inspect.get_unique_counts(df), use_container_width=True)
+    st.dataframe(get_unique_counts(df), use_container_width=True)
 
     st.subheader("Summary Statistics")
-    st.dataframe(inspect.get_summary(df), use_container_width=True)
+    st.dataframe(get_summary(df), use_container_width=True)
 
 # ---------------- Cleaning ----------------
 with tab_clean:
@@ -72,33 +72,33 @@ with tab_clean:
     strategy = st.selectbox("Strategy", ["none", "drop", "mean", "median", "mode", "constant"])
     fill_value = st.text_input("Fill value (only for 'constant')", "0") if strategy == "constant" else None
     if st.button("Apply missing value strategy") and strategy != "none":
-        st.session_state.df = cleaning.handle_missing(df, strategy, fill_value)
+        st.session_state.df = handle_missing(df, strategy, fill_value)
         st.success(f"Applied strategy: {strategy}")
         st.rerun()
 
     st.divider()
     st.subheader("Duplicates")
     if st.button("Drop duplicate rows"):
-        st.session_state.df = cleaning.drop_duplicates(df)
+        st.session_state.df = drop_duplicates(df)
         st.success("Duplicates removed")
         st.rerun()
 
     st.divider()
     st.subheader("Whitespace Cleanup")
     if st.button("Strip whitespace from text columns"):
-        st.session_state.df = cleaning.strip_whitespace(df)
+        st.session_state.df = strip_whitespace(df)
         st.success("Whitespace stripped")
         st.rerun()
 
     st.divider()
     st.subheader("Outlier Removal (IQR method)")
-    numeric_cols, _, _ = inspect.get_column_types(df)
+    numeric_cols, _, _ = get_column_types(df)
     if numeric_cols:
         outlier_col = st.selectbox("Column", numeric_cols)
-        outliers = cleaning.detect_outliers_iqr(df, outlier_col)
+        outliers = detect_outliers_iqr(df, outlier_col)
         st.write(f"{len(outliers)} outlier rows detected")
         if st.button("Remove outliers"):
-            st.session_state.df = cleaning.remove_outliers_iqr(df, outlier_col)
+            st.session_state.df = remove_outliers_iqr(df, outlier_col)
             st.success("Outliers removed")
             st.rerun()
     else:
@@ -109,7 +109,7 @@ with tab_clean:
     col_to_convert = st.selectbox("Column to convert", df.columns)
     new_type = st.selectbox("New type", ["str", "int64", "float64", "category", "datetime64[ns]"])
     if st.button("Convert type"):
-        st.session_state.df = cleaning.convert_dtype(df, col_to_convert, new_type)
+        st.session_state.df = convert_dtype(df, col_to_convert, new_type)
         st.rerun()
 
     st.divider()
@@ -122,7 +122,7 @@ with tab_clean:
 
 # ---------------- Analysis ----------------
 with tab_analysis:
-    numeric_cols, categorical_cols, _ = inspect.get_column_types(df)
+    numeric_cols, categorical_cols, _ = get_column_types(df)
 
     if numeric_cols:
         st.subheader("Correlation Heatmap")
@@ -145,6 +145,6 @@ with tab_analysis:
     if categorical_cols:
         st.subheader("Category Counts")
         cat_col = st.selectbox("Categorical column", categorical_cols, key="cat_col")
-        st.pyplot(analysis.plot_bar_categorical(df, cat_col))
+        st.pyplot(plot_bar_categorical(df, cat_col))
     else:
         st.caption("No categorical columns available.")
