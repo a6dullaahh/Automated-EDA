@@ -126,11 +126,11 @@ with tab_analysis:
 
     if numeric_cols:
         st.subheader("Correlation Heatmap")
-        st.pyplot(analysis.plot_correlation_heatmap(df))
+        st.pyplot(plot_correlation_heatmap(df))
 
         st.subheader("Distribution")
         hist_col = st.selectbox("Numeric column", numeric_cols, key="hist_col")
-        st.pyplot(analysis.plot_histogram(df, hist_col))
+        st.pyplot(plot_histogram(df, hist_col))
 
         st.subheader("Scatter Plot")
         c1, c2, c3 = st.columns(3)
