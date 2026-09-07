@@ -1,6 +1,6 @@
 import streamlit as st
 from load import loader
-from data_inspect import get_shape, get_dtypes, get_missing, get_summary, get_duplicates, get_column_types
+from data_inspect import get_shape, get_dtypes, get_missing, get_summary, get_duplicates, get_column_types,get_unique_counts
 from cleaning import drop_duplicates, handle_missing, convert_dtype, detect_outliers_iqr, remove_outliers_iqr,strip_whitespace
 from analysis import(
     correlation_matrix,
