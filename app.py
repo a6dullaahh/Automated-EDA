@@ -138,7 +138,7 @@ with tab_analysis:
         y_default = min(1, len(numeric_cols) - 1)
         y_col = c2.selectbox("Y axis", numeric_cols, index=y_default, key="y_col")
         color_col = c3.selectbox("Color (optional)", [None] + categorical_cols, key="color_col")
-        st.pyplot(analysis.plot_scatter(df, x_col, y_col, color_col))
+        st.pyplot(plot_scatter(df, x_col, y_col, color_col))
     else:
         st.caption("No numeric columns available for correlation/scatter analysis.")
 
