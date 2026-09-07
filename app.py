@@ -1,8 +1,16 @@
 import streamlit as st
 from load import loader
-from inspect import inspect
-from cleaning import cleaning
-from analysis import analysis
+from inspect import get_shape, get_dtypes, get_missing, get_summary, get_duplicates, get_column_types
+from cleaning import drop_duplicates, handle_missing, convert_dtype, detect_outliers_iqr, remove_outliers_iqr,strip_whitespace
+from analysis import
+    correlation_matrix,
+    plot_correlation_heatmap,
+    plot_histogram,
+    plot_box,
+    plot_bar_categorical,
+    plot_scatter,
+    plot_pairplot,
+
 
 st.set_page_config(page_title="Automated EDA", layout="wide")
 st.title("📊 Automated EDA App")
