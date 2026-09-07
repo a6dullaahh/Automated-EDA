@@ -1,5 +1,8 @@
 import streamlit as st
-from functions import load, inspect, cleaning, analysis
+from load import load
+from inspect import inspect
+from cleaning import cleaning
+from analysis import analysis
 
 st.set_page_config(page_title="Automated EDA", layout="wide")
 st.title("📊 Automated EDA App")
