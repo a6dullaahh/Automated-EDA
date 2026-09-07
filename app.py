@@ -2,7 +2,7 @@ import streamlit as st
 from load import loader
 from inspect import get_shape, get_dtypes, get_missing, get_summary, get_duplicates, get_column_types
 from cleaning import drop_duplicates, handle_missing, convert_dtype, detect_outliers_iqr, remove_outliers_iqr,strip_whitespace
-from analysis import
+from analysis import(
     correlation_matrix,
     plot_correlation_heatmap,
     plot_histogram,
@@ -10,7 +10,7 @@ from analysis import
     plot_bar_categorical,
     plot_scatter,
     plot_pairplot,
-
+)
 
 st.set_page_config(page_title="Automated EDA", layout="wide")
 st.title("📊 Automated EDA App")
@@ -23,7 +23,7 @@ if "original_df" not in st.session_state:
 uploaded_file = st.sidebar.file_uploader("Upload a CSV or Excel file", type=["csv", "xlsx", "xls"])
 
 if uploaded_file is not None and st.session_state.original_df is None:
-    df_loaded = load.loader(uploaded_file)
+    df_loaded = loader(uploaded_file)
     st.session_state.original_df = df_loaded
     st.session_state.df = df_loaded.copy()
 
