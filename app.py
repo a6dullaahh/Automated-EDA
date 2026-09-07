@@ -1,5 +1,5 @@
 import streamlit as st
-from load import load
+from load import loader
 from inspect import inspect
 from cleaning import cleaning
 from analysis import analysis
